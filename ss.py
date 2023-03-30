@@ -57,11 +57,9 @@ def page1():
     else:
       image = Image.open(file)
       img = np.array(image)
-      col1, col2 = st.columns(2,gap='small')
-      with col1:
-       st.image(image,width=200)
-      with col2:
-       st.write(pd.DataFrame(getEmotions(img),index=[0]))
+      
+      st.image(image,width=350)
+      st.write(pd.DataFrame(getEmotions(img),index=[0]))
 
 def Page2():
     def convertto_watercolorsketch(inp_img):
@@ -109,7 +107,7 @@ def Page2():
                 st.image(load_an_image(image_file), width=250)
                with col2:
                 st.header("Your Cartoon Version")
-                st.image(im_pil, width=300)
+                st.image(im_pil, width=250)
                 buf = BytesIO()
                 img = im_pil
                 img.save(buf, format="JPEG")
@@ -132,7 +130,7 @@ def Page2():
   
                with col2:
                 st.header("Pencil Sketch Splash")
-                st.image(im_pil, width=300)
+                st.image(im_pil, width=250)
                 buf = BytesIO()
                 img = im_pil
                 img.save(buf, format="JPEG")
