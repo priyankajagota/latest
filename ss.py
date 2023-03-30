@@ -12,7 +12,7 @@ from io import BytesIO
 import numpy as np
 import cv2  # computer vision
 from multiapp import MultiApp
-@st.cache_data
+
 def Wel():
    st.markdown('<h1 style="color: black;font-family:cursive;"> Photo Notebook </h1',unsafe_allow_html=True)
    st.image("ss.jpg")
