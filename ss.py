@@ -114,7 +114,7 @@ def Page2():
                 st.header("Original Image")
                 st.image(load_an_image(image_file), width=250)
                with col2:
-                st.header("Water Color Splash")
+                st.header("Cartoon Version")
                 st.image(im_pil, width=250)
                 buf = BytesIO()
                 img = im_pil
