@@ -5,6 +5,6 @@ opencv-python==4.5.5.64
 fer
 moviepy
 pandas
-streamlit
-tensorflow
-protobuf>3.20.3
+streamlit==1.13.0
+tensorflow==2.10.0
+tensorboard==2.10.1
