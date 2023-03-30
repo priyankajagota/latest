@@ -6,3 +6,4 @@ fer
 moviepy
 pandas
 streamlit
+tensorflow
