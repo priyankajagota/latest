@@ -17,7 +17,7 @@ import numpy as np
 import sys
 from tqdm import tqdm
 
-
+@st.cache_data
 def Wel():
    st.markdown('<h1 style="color: black;font-family:cursive;"> Photo Notebook </h1',unsafe_allow_html=True)
    st.image("ss.jpg")
@@ -51,15 +51,23 @@ def page1():
         ### Every picture says some story, lets generate yours....
         """
     )
-    file = st.file_uploader('Please upload an image file', type = ['jpg','png','jpeg'])
+    file = st.file_uploader('Please upload an image file', type = ['jpg','png'])
     if file is None:
       st.write("")
     else:
       image = Image.open(file)
       img = np.array(image)
-      
-      st.image(image,width=350)
-      st.write(pd.DataFrame(getEmotions(img),index=[0]))
+      st.image(image,width=200)
+      #st.write(pd.DataFrame(getEmotions(img),index=[0]).transpose(copy=False))
+      #st.bar_chart(pd.DataFrame(getEmotions(img),index=[0]).transpose(copy=False))
+      tab1, tab2 = st.tabs(["Tabular - Emotions Score", "Graphical - Emotions Score"])
+      with tab1:
+    # Use the Streamlit theme.
+    # This is the default. So you can also omit the theme argument.
+         st.write(pd.DataFrame(getEmotions(img),index=[0]).transpose(copy=False))
+      with tab2:
+    # Use the native Altair theme.
+         st._arrow_line_chart(pd.DataFrame(getEmotions(img),index=[0]).transpose(copy=False))
 
 def Page2():
     def convertto_watercolorsketch(inp_img):
@@ -106,7 +114,7 @@ def Page2():
                 st.header("Original Image")
                 st.image(load_an_image(image_file), width=250)
                with col2:
-                st.header("Your Cartoon Version")
+                st.header("Water Color Splash")
                 st.image(im_pil, width=250)
                 buf = BytesIO()
                 img = im_pil
