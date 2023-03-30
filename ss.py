@@ -12,6 +12,11 @@ from io import BytesIO
 import numpy as np
 import cv2  # computer vision
 from multiapp import MultiApp
+import cv2
+import numpy as np
+import sys
+from tqdm import tqdm
+
 
 def Wel():
    st.markdown('<h1 style="color: black;font-family:cursive;"> Photo Notebook </h1',unsafe_allow_html=True)
@@ -46,7 +51,7 @@ def page1():
         ### Every picture says some story, lets generate yours....
         """
     )
-    file = st.file_uploader('Please upload an image file',type=["png", "jpg", "jpeg"])
+    file = st.file_uploader('Please upload an image file', type = ['jpg','png'])
     if file is None:
       st.write("")
     else:
@@ -59,7 +64,7 @@ def page1():
        st.write(pd.DataFrame(getEmotions(img),index=[0]))
 
 def Page2():
-   def convertto_watercolorsketch(inp_img):
+    def convertto_watercolorsketch(inp_img):
        
         Img = cv2.resize(inp_img, (740,480))
         GrayImg = cv2.cvtColor(src=Img, code=cv2.COLOR_BGR2GRAY)
@@ -139,6 +144,9 @@ def Page2():
                     mime="image/png")
     if __name__ == '__main__':
        main()
+
+
+   
 
 app = MultiApp()
 app.add_app("Welcome Page",Wel)
