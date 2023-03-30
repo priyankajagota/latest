@@ -59,10 +59,21 @@ def page1():
        st.write(pd.DataFrame(getEmotions(img),index=[0]))
 
 def Page2():
-    def convertto_watercolorsketch(inp_img):
-       img_1 = cv2.edgePreservingFilter(inp_img, flags=2, sigma_s=50, sigma_r=0.8)
-       img_water_color = cv2.stylization(img_1, sigma_s=100, sigma_r=0.5)
-       return(img_water_color)
+   def convertto_watercolorsketch(inp_img):
+       
+        Img = cv2.resize(inp_img, (740,480))
+        GrayImg = cv2.cvtColor(src=Img, code=cv2.COLOR_BGR2GRAY)
+        SmoothImg = cv2.medianBlur(src=GrayImg, ksize=5)
+
+        Edges = cv2.adaptiveThreshold(src=SmoothImg, maxValue=255, \
+        adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C, \
+        thresholdType=cv2.THRESH_BINARY, blockSize=7, C=6)
+
+        ColorImg = cv2.bilateralFilter(src=Img, d=9, sigmaColor=220, \
+            sigmaSpace=200)
+
+        img_water_color = cv2.bitwise_and(src1=ColorImg,src2=ColorImg,mask=Edges)
+        return(img_water_color)
   
     def pencilsketch(inp_img):
        img_pencil_sketch, pencil_color_sketch = cv2.pencilSketch(
@@ -81,9 +92,9 @@ def Page2():
        image_file = st.file_uploader("Upload Images", type=["png", "jpg", "jpeg"])
        if image_file is not None:
             option = st.selectbox('Hmmm, Which style you prefer? 😎',
-                              ('Paint my memories with water color',
+                              ('Cartoonify Me',
                                'Pencil sketch Splash'))
-            if option == 'Paint my memories with water color':
+            if option == 'Cartoonify Me':
                image = Image.open(image_file)
                final_sketch = convertto_watercolorsketch(np.array(image))
                im_pil = Image.fromarray(final_sketch)
@@ -128,6 +139,7 @@ def Page2():
                     mime="image/png")
     if __name__ == '__main__':
        main()
+
 app = MultiApp()
 app.add_app("Welcome Page",Wel)
 app.add_app("Emotions Detector",page1)
